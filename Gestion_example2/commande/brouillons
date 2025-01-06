@@ -1,0 +1,53 @@
+<script>
+
+    document.getElementById('sous-categorie').addEventListener('change', function() {
+        // Récupérer la valeur de la sous-catégorie sélectionnée
+        var idSousCategorie = this.value;
+  
+        // Faire une requête AJAX pour récupérer les produits de la sous-catégorie sélectionnée
+        fetch('../modal-05/liste_produit.php?id_sous_categorie=' + idSousCategorie)
+          .then(response => response.json())
+          .then(data => {
+            // Vider le select des produits
+            var produitSelect = document.getElementById('produit');
+            produitSelect.innerHTML = '<option selected disabled>Sélectionnez un produit</option>';
+  
+            // Remplir le select des produits avec les données récupérées
+            data.forEach(produit => {
+              var option = document.createElement('option');
+              option.value = produit.idP;
+              option.text = produit.nomproduit;
+              produitSelect.add(option);
+            });
+          })
+          .catch(error => console.error('Erreur lors de la récupération des produits :', error));
+      });
+
+   /*
+   fetch('bon_commande.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Bon de Commande édité avec succès");
+                    location.reload();
+                } else {
+                    alert("Erreur lors de l'édition du Bon de Commande");
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des produits :', error));
+            */
+
+//pour le bouton qui affiche le modal
+    openModalButton.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    closeButton.onclick = function() {
+      modal.style.display = "none";
+    }
+
+
+
+      
+</script>
+
